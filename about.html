@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-9">
+  <h1 class="h2 fw-bold mb-3">About this project</h1>
+  <p>The <strong>AI-Based Student Feedback Analysis &amp; Sentiment Monitoring Portal</strong> is a Web Technology course project. It lets students send feedback and helps administrators understand the overall mood of the campus.</p>
+  <h2 class="h5 fw-bold mt-4">How sentiment is calculated</h2>
+  <p>Each comment goes through a small, local routine. TextBlob measures how positive or negative the wording is, and a short list of campus-specific words (such as <em>outdated</em> or <em>helpful</em>) adjusts the result. The final score runs from -1 to +1: <strong>0.10 or higher is Positive</strong>, <strong>-0.10 or lower is Negative</strong>, and anything between is Neutral.</p>
+  <div class="alert alert-info">This is a lightweight sentiment-analysis feature, not a highly accurate AI model. It can misjudge sarcasm, mixed opinions and very short comments.</div>
+  <h2 class="h5 fw-bold mt-4">Technology</h2>
+  <ul><li>Frontend: HTML5, CSS3, JavaScript, Bootstrap 5, Chart.js</li><li>Backend: Python and Flask</li><li>Database: SQLite through SQLAlchemy</li><li>Sentiment: TextBlob with a keyword list, running fully on localhost</li></ul>
+  <h2 class="h5 fw-bold mt-4">Privacy</h2>
+  <p>Passwords are stored as hashes. Feedback marked anonymous never shows the student's name or ID to administrators or in reports.</p>
+  <a class="btn btn-primary mt-2" href="{{ url_for('auth.register') }}">Create a student account</a>
+</div></div>
+{% endblock %}

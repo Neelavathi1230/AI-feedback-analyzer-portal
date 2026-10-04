@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Student Login{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-md-7 col-lg-5">
+  <div class="card shadow-sm border-0"><div class="card-body p-4">
+    <h1 class="h3 fw-bold mb-1">Student login</h1>
+    <p class="text-muted">Use the email and password you registered with.</p>
+    <form method="post" class="needs-validation" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="mb-3"><label class="form-label" for="email">Email</label>
+        <input class="form-control" type="email" id="email" name="email" value="{{ email }}" required autofocus>
+        <div class="invalid-feedback">Enter a valid email address.</div></div>
+      <div class="mb-3"><label class="form-label" for="password">Password</label>
+        <input class="form-control" type="password" id="password" name="password" required>
+        <div class="invalid-feedback">Enter your password.</div></div>
+      <button class="btn btn-primary w-100" type="submit">Login</button>
+    </form>
+    <hr>
+    <p class="mb-1 small">New student? <a href="{{ url_for('auth.register') }}">Register here</a></p>
+    <p class="mb-0 small">Administrator? <a href="{{ url_for('auth.admin_login') }}">Admin login</a></p>
+  </div></div>
+</div></div>
+{% endblock %}

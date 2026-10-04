@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit Feedback' if fb else 'Submit Feedback' }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8">
+  <div class="card shadow-sm border-0"><div class="card-body p-4">
+    <h1 class="h3 fw-bold mb-1">{{ 'Edit feedback' if fb else 'Submit feedback' }}</h1>
+    <p class="text-muted">Your comment is analysed automatically when you save it.</p>
+    <form method="post" class="needs-validation" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="row g-3">
+        <div class="col-md-6"><label class="form-label" for="category">Feedback category</label>
+          <select class="form-select" id="category" name="category" required>
+            <option value="">Choose...</option>
+            {% for c in cfg.CATEGORIES %}<option {{ 'selected' if values.get('category') == c }}>{{ c }}</option>{% endfor %}
+          </select><div class="invalid-feedback">Choose a category.</div></div>
+        <div class="col-md-6"><label class="form-label" for="department">Department</label>
+          <select class="form-select" id="department" name="department" required>
+            <option value="">Choose...</option>
+            {% for d in cfg.DEPARTMENTS %}<option {{ 'selected' if values.get('department') == d }}>{{ d }}</option>{% endfor %}
+          </select><div class="invalid-feedback">Choose a department.</div></div>
+        <div class="col-md-6"><label class="form-label" for="subject">Subject / Course</label>
+          <input class="form-control" id="subject" name="subject" minlength="2" maxlength="100" value="{{ values.get('subject','') }}" placeholder="e.g. Data Structures, Library" required>
+          <div class="invalid-feedback">Enter a subject or course (2-100 characters).</div></div>
+        <div class="col-md-6"><label class="form-label" for="faculty">Faculty name <span class="text-muted">(optional)</span></label>
+          <input class="form-control" id="faculty" name="faculty" maxlength="100" value="{{ values.get('faculty','') or '' }}"></div>
+        <div class="col-12"><label class="form-label d-block">Rating</label>
+          <div class="btn-group rating-group flex-wrap" role="group" aria-label="Rating">
+            {% for i in range(1, 6) %}
+            <input type="radio" class="btn-check" name="rating" id="r{{ i }}" value="{{ i }}" {{ 'checked' if values.get('rating')|string == i|string }} required>
+            <label class="btn btn-outline-warning" for="r{{ i }}">{{ i }} &#9733;</label>
+            {% endfor %}
+          </div>
+          <div class="form-text">1 = very unhappy, 5 = very happy</div></div>
+        <div class="col-12"><label class="form-label" for="comment">Feedback comment</label>
+          <textarea class="form-control" id="comment" name="comment" rows="5" minlength="{{ cfg.COMMENT_MIN }}" maxlength="{{ cfg.COMMENT_MAX }}" required data-counter="comment-count">{{ values.get('comment','') }}</textarea>
+          <div class="d-flex justify-content-between"><div class="form-text">{{ cfg.COMMENT_MIN }} to {{ cfg.COMMENT_MAX }} characters.</div>
+            <div class="form-text"><span id="comment-count">0</span> / {{ cfg.COMMENT_MAX }}</div></div>
+          <div class="invalid-feedback">Write at least {{ cfg.COMMENT_MIN }} characters.</div></div>
+        <div class="col-12"><div class="form-check">
+          <input class="form-check-input" type="checkbox" id="is_anonymous" name="is_anonymous" {{ 'checked' if values.get('is_anonymous') }}>
+          <label class="form-check-label" for="is_anonymous">Submit anonymously (administrators will not see my name or ID)</label></div></div>
+      </div>
+      <div class="mt-4 d-flex gap-2">
+        <button class="btn btn-primary" type="submit">{{ 'Save changes' if fb else 'Submit feedback' }}</button>
+        <a class="btn btn-outline-secondary" href="{{ url_for('student.my_feedback') }}">Cancel</a>
+      </div>
+    </form>
+  </div></div>
+</div></div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}500{% endblock %}
+{% block content %}
+<div class="text-center py-5">
+  <div class="display-1 fw-bold error-code">500</div>
+  <h1 class="h3 fw-bold">Something went wrong</h1>
+  <p class="text-muted">The server had a problem. Please try again in a moment.</p>
+  <a class="btn btn-primary" href="{{ url_for('auth.index') }}">Back to home</a>
+</div>
+{% endblock %}

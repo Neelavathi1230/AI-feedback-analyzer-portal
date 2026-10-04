@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero rounded-4 p-4 p-md-5 mb-5">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-7">
+      <h1 class="display-5 fw-bold">AI-Based Student Feedback Analysis &amp; Sentiment Monitoring Portal</h1>
+      <p class="lead mt-3">Students share honest feedback about teaching, courses and campus facilities. The portal reads every comment, labels it Positive, Neutral or Negative, and shows administrators what needs attention.</p>
+      <div class="d-flex flex-wrap gap-2 mt-4">
+        <a class="btn btn-warning btn-lg" href="{{ url_for('student.submit_feedback') }}">Submit Feedback</a>
+        <a class="btn btn-outline-light btn-lg" href="{{ url_for('auth.login') }}">Login</a>
+      </div>
+      <p class="small mt-3 mb-0 text-white-50">Sentiment is detected with a lightweight keyword + TextBlob method. It is a helpful guide, not a perfect judge.</p>
+    </div>
+    <div class="col-lg-5">
+      <div class="hero-card rounded-4 p-4">
+        <div class="small text-uppercase-none text-white-50 mb-2">Example comments, as the portal reads them</div>
+        <div class="demo-line"><span class="badge bg-success">Positive</span> &ldquo;The faculty explained everything clearly.&rdquo;</div>
+        <div class="demo-line"><span class="badge bg-secondary">Neutral</span> &ldquo;The course was okay.&rdquo;</div>
+        <div class="demo-line"><span class="badge bg-danger">Negative</span> &ldquo;The lab equipment is old and needs improvement.&rdquo;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mb-5">
+  <h2 class="h3 fw-bold mb-3">Features</h2>
+  <div class="row g-3">
+    {% for title, text in [
+      ('Feedback in 11 categories', 'Teaching, faculty, library, laboratory, canteen, hostel, transport and more.'),
+      ('Automatic sentiment', 'Every comment gets a label and a score from -1 to +1 as soon as it is saved.'),
+      ('Anonymous option', 'Students can hide their identity. Admins never see it for anonymous feedback.'),
+      ('Live dashboard', 'Five charts built from real database records, not fixed demo numbers.'),
+      ('Search and filters', 'Combine sentiment, category, department, rating and keyword filters.'),
+      ('CSV reports', 'Download the filtered feedback as a spreadsheet-ready file.')] %}
+    <div class="col-md-6 col-lg-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body">
+      <h3 class="h6 fw-bold">{{ title }}</h3><p class="mb-0 text-muted">{{ text }}</p></div></div></div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="mb-5">
+  <h2 class="h3 fw-bold mb-3">How it works</h2>
+  <div class="row g-3">
+    {% for n, title, text in [
+      (1, 'Register and log in', 'Create a student account with your Student ID and college email.'),
+      (2, 'Write your feedback', 'Pick a category, give a 1-5 rating and describe your experience.'),
+      (3, 'Sentiment is analysed', 'The comment is scored and labelled when you submit it.'),
+      (4, 'Admins act on it', 'Administrators review trends, filter problems and export reports.')] %}
+    <div class="col-md-6 col-lg-3"><div class="step-card h-100 p-3 rounded-3">
+      <div class="step-num">{{ n }}</div><h3 class="h6 fw-bold mt-2">{{ title }}</h3><p class="mb-0 small text-muted">{{ text }}</p></div></div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="mb-4">
+  <h2 class="h3 fw-bold mb-3">Benefits</h2>
+  <div class="row g-3">
+    <div class="col-md-6"><div class="p-4 rounded-3 bg-white shadow-sm h-100"><h3 class="h6 fw-bold">For students</h3>
+      <ul class="mb-0 text-muted"><li>A simple, private way to be heard</li><li>See how your own comments were understood</li><li>Edit or delete your feedback any time</li></ul></div></div>
+    <div class="col-md-6"><div class="p-4 rounded-3 bg-white shadow-sm h-100"><h3 class="h6 fw-bold">For the college</h3>
+      <ul class="mb-0 text-muted"><li>Spot unhappy areas quickly</li><li>Compare departments and categories</li><li>Share data-backed reports with management</li></ul></div></div>
+  </div>
+</section>
+{% endblock %}

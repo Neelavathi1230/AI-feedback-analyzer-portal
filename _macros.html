@@ -1,0 +1,15 @@
+{% macro sentiment_badge(s) %}{% set cls = {'Positive':'success','Neutral':'secondary','Negative':'danger'}.get(s,'secondary') %}<span class="badge bg-{{ cls }}">{{ s }}</span>{% endmacro %}
+{% macro stars(n) %}<span class="stars" title="{{ n }} / 5">{% for i in range(1,6) %}{{ '★' if i <= n else '☆' }}{% endfor %}</span>{% endmacro %}
+{% macro pager(p, endpoint, args) %}
+{% if p.pages > 1 %}
+<nav aria-label="Pages"><ul class="pagination justify-content-center flex-wrap mb-0">
+  <li class="page-item {{ 'disabled' if not p.has_prev }}"><a class="page-link" href="{{ url_for(endpoint, page=p.prev_num, **args) if p.has_prev else '#' }}">Previous</a></li>
+  {% for n in p.iter_pages() %}
+    {% if n %}<li class="page-item {{ 'active' if n == p.page }}"><a class="page-link" href="{{ url_for(endpoint, page=n, **args) }}">{{ n }}</a></li>
+    {% else %}<li class="page-item disabled"><span class="page-link">&hellip;</span></li>{% endif %}
+  {% endfor %}
+  <li class="page-item {{ 'disabled' if not p.has_next }}"><a class="page-link" href="{{ url_for(endpoint, page=p.next_num, **args) if p.has_next else '#' }}">Next</a></li>
+</ul></nav>
+{% endif %}
+{% endmacro %}
+{% macro author(fb) %}{% if fb.is_anonymous %}<span class="text-muted fst-italic">Anonymous</span>{% else %}{{ fb.user.name }} <small class="text-muted">({{ fb.user.student_id }})</small>{% endif %}{% endmacro %}
